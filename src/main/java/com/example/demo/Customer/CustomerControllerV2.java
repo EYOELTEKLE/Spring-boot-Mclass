@@ -1,5 +1,6 @@
 package com.example.demo.Customer;
 
+import com.example.demo.Exception.NotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -26,7 +27,7 @@ public class CustomerControllerV2 {
     @GetMapping(path = "{id}")
     public Customer courses(@PathVariable("id") Long id)
     {
-        return customerService.getCustomers().stream().filter(customer -> customer.getId() == id).findFirst().orElseThrow(() -> new IllegalStateException("customer not found!!"));
+        return customerService.getCustomers().stream().filter(customer -> customer.getId() == id).findFirst().orElseThrow(() -> new NotFoundException("not found"));
     }
     @PostMapping
     void createCustomer(@Valid @RequestBody Customer customer)
