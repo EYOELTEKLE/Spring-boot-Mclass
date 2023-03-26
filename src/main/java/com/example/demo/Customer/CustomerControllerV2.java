@@ -1,5 +1,6 @@
 package com.example.demo.Customer;
 
+import com.example.demo.Exception.ApiRequestException;
 import com.example.demo.Exception.NotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class CustomerControllerV2 {
     public Customer courses(@PathVariable("id") Long id)
     {
         return customerService.getCustomers().stream().filter(customer -> customer.getId() == id).findFirst().orElseThrow(() -> new NotFoundException("not found"));
+    }
+    @GetMapping(path = "{id}/Exception")
+    public Customer coursesException(@PathVariable("id") Long id)
+    {
+        throw new ApiRequestException("API Request Exception " + id);
     }
     @PostMapping
     void createCustomer(@Valid @RequestBody Customer customer)
